@@ -1,19 +1,65 @@
-/**
- * Toggles "done" class on <li> element
- */
+$( document ).ready( function () {
 
-/**
- * Delete element when delete link clicked
- */
+  /**
+   * Toggles "done" class on <li> element
+   */
+  const $li = $('li')
+  $li.click(function(e) {
+    $(this).toggleClass('done');
+  });
 
-/**
- * Adds new list item to <ul>
- */
-const addListItem = function(e) {
-  e.preventDefault();
-  const text = $('input').val();
+  /**
+   * Delete element when delete link clicked
+   */
 
-  // rest here...
-};
+  $('.delete').click(function(e) {
+      e.stopPropagation();
 
-// add listener for add
+      /** {EXTRA CREDIT} 
+      Instead of remove() method, used fadeOut() method.
+        $(this).parent().remove();
+      */
+      $(this).parent().fadeOut(750, function() {
+        $(this).remove();
+      });   
+  });  
+
+  /**
+   * Adds new list item to <ul>
+   */
+  const addListItem = function(e) {
+    e.preventDefault();
+    const text = $('input').val();
+
+    /** Created <li> element for newly added item */
+    const $newLi = $('<li>');
+    const $newSpan = $('<span>');
+    $newSpan.text(`${text}`);
+    $newLi.append($newSpan);
+    const $newA = $('<a class="delete">');
+    $newA.text('Delete');
+    $newLi.append($newA);
+    $('.today-list').append($newLi);
+
+    /** Add event listeners */
+    $newLi.click(function(e) {
+      $(this).toggleClass('done');
+    });
+
+    $newA.click(function(e) {
+      e.stopPropagation();
+      $(this).parent().fadeOut(750, function() {
+        $(this).remove();
+      });   
+    });
+
+    /** CLear input field */
+    $('input').val('');
+  };
+
+  // add listener for add
+  $('.add-item').click(function(e) {
+    addListItem(e);
+  });
+
+});
