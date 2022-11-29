@@ -30,7 +30,6 @@ $( document ).ready( function () {
   const addListItem = function(e) {
     e.preventDefault();
     const text = $('input').val();
-    console.log(text)
 
     /** Created <li> element for newly added item */
     const $newLi = $('<li>');
